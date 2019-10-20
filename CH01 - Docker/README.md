@@ -66,7 +66,7 @@ Status: Downloaded newer image for ubuntu:latest
 root@01970526c47f:/#
 ```
 
-That last line that ended with the "hash" or "pound" character indicates that you're in the Ubuntu operating system running as the root user.  To show that you're in there, try a few commands like `ls` to list the contents of the folder, then `exit` when you're done.  In this case, existing will take you out of the Ubuntu container and terminate it.  The Ubuntu image is cached on your computer, so it will not need to be downloaded again if you use it.
+That last line that ended with the "hash" or "pound" character indicates that you're in the Ubuntu operating system running as the root user.  To show that you're in there, try a few commands like `ls` to list the contents of the folder, then `exit` when you're done.  In this case, exiting will take you out of the Ubuntu container and terminate it.  The Ubuntu image is cached on your computer, so it will not need to be re-downloaded when we run it again.
 
 To see the running docker containers, type `docker ps`.
 
