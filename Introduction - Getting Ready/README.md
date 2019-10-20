@@ -100,4 +100,4 @@ sudo usermod -aG docker pi
 
 ## Next
 
-On to [chapter one](../CH01 - Docker/README.md).
+On to [chapter one](https://github.com/joe-diy/DIY-EdgeComputing/tree/master/CH01%20-%20Docker#chapter-one---images-and-containers).
