@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/assets/css/style.css?v=992e67a2ce5c5623d75883b5e3f779fd099710c0">
+    <link rel="stylesheet" type="text/css" href="/assets/css/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Introduction - Getting Ready | DIY Edge Computing</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Introduction - Getting Ready" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Learn how to do Edge Computing end-to-end." />
+<meta property="og:description" content="Learn how to do Edge Computing end-to-end." />
+<link rel="canonical" href="http://localhost:4000/Introduction%20-%20Getting%20Ready/" />
+<meta property="og:url" content="http://localhost:4000/Introduction%20-%20Getting%20Ready/" />
+<meta property="og:site_name" content="DIY Edge Computing" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/Introduction%20-%20Getting%20Ready/","description":"Learn how to do Edge Computing end-to-end.","headline":"Introduction - Getting Ready","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Introduction - Getting Ready</h1>
+          <h2>Learn how to do Edge Computing end-to-end.</h2>
+        </header>
+        <section id="downloads" class="clearfix">
+          
+	
+        </section>
+        <hr>
+        <section id="main_content">
+          <h1 id="introduction---getting-ready">Introduction - Getting Ready</h1>
+
+<h2 id="hardware">Hardware</h2>
+
+<p><img src="images/grove-pi-plus.png" width="300" height="124" /></p>
+
+<p>This book is based on the <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/">Raspberry Pi 3 Model B+</a> hardware and the <a href="https://www.amazon.com/Seeedstudio-GrovePi-Starter-Kit-Raspberry-Certified/dp/B01BRCEWV2/">GrovePi+ Starter Kit for Raspberry Pi 3</a>.  It will work equally well with a <a href="https://www.raspberrypi.org/products/raspberry-pi-4-model-b/">Raspberry Pi 4 Model B</a>.</p>
+
+<p><em>Why?</em></p>
+
+<p>The Raspberry Pi (RPi) is an inexpensive computer, starting at around $35 US.  If you already have a different computer that you would like to use, feel free to do so, but keep in mind that it may not be compatible with these instructions.  I’m using the RPi3 instead of the 4 because the 4 has some overheating issues that may require the additional purchase and installation of an aftermarket fan.  The 4 also doesn’t bring significant improvements that would offset the additional issues.</p>
+
+<p>The GrovePi+ Starter Kit is an inexpensive (if you consider ~$89 US inexpensive) and easy to use set of varied sensors and displays with great support for the RPi.  We’ll be using these in our examples.</p>
+
+<h2 id="software">Software</h2>
+
+<p><img src="images/raspbian-buster.png" width="300" height="148" /></p>
+
+<p>The Operating System of choice is <a href="https://downloads.raspberrypi.org/raspbian_lite_latest">Raspbian Buster Lite image</a> distribution (distro).  It should also work with the older <a href="https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/2019-04-08-raspbian-stretch-lite.zip">Stretch image</a> distro as well as <a href="http://cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.3-preinstalled-server-arm64+raspi3.img.xz">Ubuntu 18.04 LTS preinstalled server image for RPi 3</a>.</p>
+
+<p><em>Why?</em></p>
+
+<p>If you only plan to build applications on the RPi and never plan for them to run on any other machine, Raspbian Buster is perfectly capable of handling any task.</p>
+
+<p>If you ever plan to build applications that will run on multiple CPU architectures (Raspberry Pi uses arm-based CPUs, and both Intel and AMD use x86-based CPUs), then Ubuntu is a good choice since it supports both.</p>
+
+<h2 id="burning-the-software-image">Burning the Software Image</h2>
+
+<p><img src="images/balena-etcher.png" width="300" height="189" /></p>
+
+<p>After downloading an image in the previous step, you’ll need to transfer it to a microSD card in a way that preserves the filesystem and allows it to be booted.  <a href="https://www.balena.io/etcher/">Balena’s Etcher</a> is a great program for that purpose.  Download and install Etcher, insert your microSD card, then start up Etcher to write the software stack to the card.</p>
+
+<p><em>Why?</em></p>
+
+<p>The software image is downloaded as a compressed archive, and will require one of several different utilities to uncompress and use.  Etcher removes that need.  Etcher will also partition the filesystem properly on the card so that you don’t have to.  Trust me, this is a complicated process and easy to get wrong.  But if you want to tackle it, by all means have fun doing so.</p>
+
+<h2 id="connecting-to-the-raspberry-pi">Connecting to the Raspberry Pi</h2>
+
+<h3 id="first-get-the-rpis-address">First, Get the RPi’s Address</h3>
+
+<p>There are several techniques for finding a device on your local network.  You may need to try more than one technique in order to identify the address of your newly-booted RPi.</p>
+
+<p>If you’re in a location where you have access to the router that the RPi connects to, try logging onto the router to identify the device and obtain its IP address.</p>
+
+<blockquote>
+  <p>Raspberry Pi devices can always be identified by their MAC address, which begins with B8-27-EB for older RPis, and DC-A6-32 for the newer ones.</p>
+</blockquote>
+
+<p>Another technique that you can use from another device on the network is <code class="language-plaintext highlighter-rouge">arp -a</code>, but keep in mind that it will only show devices that have actively transmitted on the network recently.</p>
+
+<p>If your network supports mDNS and this is the only RPi on the network, the hostname <code class="language-plaintext highlighter-rouge">raspberrypi.local</code> will resolve to the IP address of the RPi.  Calling <code class="language-plaintext highlighter-rouge">ping raspberrypi.local</code> from a terminal will quickly show you the IP address (use ctrl-C to exit the ping).</p>
+
+<h3 id="second-connect-to-the-rpi-and-change-the-password">Second, Connect to the RPi and Change the Password</h3>
+
+<p>Once you have the IP address, using a terminal, type <code class="language-plaintext highlighter-rouge">sss pi@&lt;IP&gt;</code> where “<IP>" should be replaced with the actual IP address of the RPi.  You will need to type "yes" to continue connecting the first time you access the RPi.  The default password is "raspberry".  Please change the password right away!  You can do that with the command `passwd`.</IP></p>
+
+<h2 id="getting-updated">Getting Updated</h2>
+
+<blockquote>
+  <p>You have connected to your RPi as the user named “pi”.  This user does not have the permission to do everything you will need to do.  The only account that does have unlimited permissions is “root”, but you do have the ability to temporarily run commands with elevated permissions using the command <code class="language-plaintext highlighter-rouge">sudo</code> as a prefix.</p>
+</blockquote>
+
+<p>Software packages on the RPi can get out-of-date, even if you install the latest version of an operating system.  A package manager is the easiest way to update utilities and programs.  With the Raspbian operating system, that package manager is “apt”.</p>
+
+<p>First, you want to tell apt to retrieve the latest list (index) of utilities and programs.  You can do this by calling apt-get with elevated permissions and telling it to update.  The “y” flag is an optional convenience that tells it to automatically answer “yes” to any prompt:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nt">-y</span> update
+</code></pre></div></div>
+
+<blockquote>
+  <p>The first time you run <code class="language-plaintext highlighter-rouge">sudo</code> in a session, it will ask for the password of the user you are logged in as, “pi”.  Any subsequent time it won’t.</p>
+</blockquote>
+
+<p>Once you’ve updated the index, you will now be able to upgrade any packages that have updates available:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nt">-y</span> upgrade
+</code></pre></div></div>
+
+<p>And last, there are a few utilities that will be helpful to have at some point.  If any of these are already installed, the package manager just skips those:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nt">-y</span> <span class="nb">install </span>jq git curl make gcc
+</code></pre></div></div>
+
+<blockquote>
+  <p>If at any time it recommends rebooting, you can do so by typing <code class="language-plaintext highlighter-rouge">sudo reboot</code>, after which you will need to connect to the RPi again after a minute or so.</p>
+</blockquote>
+
+<h2 id="installing-software">Installing Software</h2>
+
+<p>In chapter one, you will be using Docker.  You may find it helpful to install both Docker Desktop on your computer, and Docker Community Edition (docker-ce) on the RPi.</p>
+
+<p>To install Docker Desktop on macOS, visit <a href="https://download.docker.com/mac/stable/Docker.dmg">https://download.docker.com/mac/stable/Docker.dmg</a>.</p>
+
+<p>On the RPi, you can install docker-ce the following way:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>curl <span class="nt">-fsSL</span> get.docker.com | <span class="nb">sudo </span>sh
+</code></pre></div></div>
+
+<p>And then after it is installed, the following command will ensure that your “pi” user can run some docker commands without elevated permissions (after the next reboot):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker pi
+</code></pre></div></div>
+
+<h2 id="next">Next</h2>
+
+<p>On to <a href="https://github.com/joe-diy/DIY-EdgeComputing/tree/master/CH01%20-%20Docker#chapter-one---images-and-containers">chapter one</a>.</p>
+
+        </section>
+
+        <footer>
+        
+          DIY Edge Computing is maintained by <a href="https://github.com/joe-diy">joe-diy</a><br>
+        
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.
+        </footer>
+
+      </div>
+    </div>
+
+    
+  </body>
+</html>

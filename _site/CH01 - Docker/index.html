@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/assets/css/style.css?v=992e67a2ce5c5623d75883b5e3f779fd099710c0">
+    <link rel="stylesheet" type="text/css" href="/assets/css/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Chapter One - Images and Containers | DIY Edge Computing</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Chapter One - Images and Containers" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Learn how to do Edge Computing end-to-end." />
+<meta property="og:description" content="Learn how to do Edge Computing end-to-end." />
+<link rel="canonical" href="http://localhost:4000/CH01%20-%20Docker/" />
+<meta property="og:url" content="http://localhost:4000/CH01%20-%20Docker/" />
+<meta property="og:site_name" content="DIY Edge Computing" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/CH01%20-%20Docker/","description":"Learn how to do Edge Computing end-to-end.","headline":"Chapter One - Images and Containers","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Chapter One - Images and Containers</h1>
+          <h2>Learn how to do Edge Computing end-to-end.</h2>
+        </header>
+        <section id="downloads" class="clearfix">
+          
+	
+        </section>
+        <hr>
+        <section id="main_content">
+          <h1 id="chapter-one---images-and-containers">Chapter One - Images and Containers</h1>
+
+<h2 id="introduction-to-docker">Introduction to Docker</h2>
+
+<p>Docker is a container runtime engine … which means that it runs “containerized” applications, or programs.  Containerized applications, or just <em>containers</em>, are the smallest and simplest way to run one or more programs in an isolated context.  This method of creating images allows you to run programs, along with all of their dependencies, without needing to install the programs on your computer, or even in the same operating system as the one installed on your computer.</p>
+
+<p>Containers are made of one or more images layered on top of each other.  This layering allows you to keep the operating system separated from dependencies separated from the application.  This layering also speeds up the process of building containers, and allows you to re-use images in multiple containers.</p>
+
+<p>Container images can be stored in, and downloaded from, registries.  The most popular free registry is DockerHub.</p>
+
+<h2 id="basic-docker-commands">Basic Docker Commands</h2>
+
+<p>We’re going to tell Docker to download (if you don’t already have it) the latest version of the Ubuntu container for your computer’s architecture and to connect to it in the <code class="language-plaintext highlighter-rouge">bash</code> shell as the <code class="language-plaintext highlighter-rouge">root</code> user.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> ubuntu /bin/bash
+</code></pre></div></div>
+
+<p>My computer displayed the following:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+22e816666fd6: Pull complete
+079b6d2a1e53: Pull complete
+11048ebae908: Pull complete
+c58094023a2e: Pull complete
+Digest: sha256:a7b8b7b33e44b123d7f997bd4d3d0a59fafc63e203d17efedf09ff3f6f516152
+Status: Downloaded newer image for ubuntu:latest
+root@01970526c47f:/#
+</code></pre></div></div>
+
+<p>That last line that ended with the “hash” or “pound” character indicates that you’re in the Ubuntu operating system running as the root user.  To show that you’re in there, try a few commands like <code class="language-plaintext highlighter-rouge">ls</code> to list the contents of the folder, then <code class="language-plaintext highlighter-rouge">exit</code> when you’re done.  In this case, exiting will take you out of the Ubuntu container and terminate it.  The Ubuntu image is cached on your computer, so it will not need to be re-downloaded when we run it again.</p>
+
+<p>To see the running docker containers, type <code class="language-plaintext highlighter-rouge">docker ps</code>.</p>
+
+<p>You should see the column headers, but no information displayed.  Now let’s start up the Ubuntu container again, but this time “detached” from your display: <code class="language-plaintext highlighter-rouge">docker run -itd ubuntu</code>.</p>
+
+<p>The string of characters it prints on the screen will be the container ID.  You can confirm this, and see that it is running, by printing the running docker containers again: <code class="language-plaintext highlighter-rouge">docker ps</code>.  Notice that the container ID it lists is an abbreviation - or shortened version - of the full container ID.  You can refer to a container by the first few characters of the ID as long as it’s unique.</p>
+
+<p>To see just the list of running container IDs, try using the “quiet” flag: <code class="language-plaintext highlighter-rouge">docker ps -q</code>.</p>
+
+<p>To connect to the running container, use the attach command: <code class="language-plaintext highlighter-rouge">docker attach &lt;ID&gt;</code> and you will be back in the shell.  Remember to type “exit” to leave the container, which will also stop it.</p>
+
+<p>To see all containers on your computer, no matter whether they are running or in any other state, print them all: <code class="language-plaintext highlighter-rouge">docker ps -a</code>.</p>
+
+<p>To remove a container from your computer, type <code class="language-plaintext highlighter-rouge">docker rm &lt;ID&gt;</code>.</p>
+
+<p>And let’s put the commands together and tell Docker to remove all containers on your computer:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">rm</span> <span class="sb">`</span>docker ps <span class="nt">-aq</span><span class="sb">`</span>
+</code></pre></div></div>
+
+<p>Last, let’s list all of the docker images that have been downloaded: <code class="language-plaintext highlighter-rouge">docker images</code>.  To see just a list of the image IDs, add the quiet flag: <code class="language-plaintext highlighter-rouge">docker images -q</code>.  To remove an image, use the remove image command: <code class="language-plaintext highlighter-rouge">docker rmi &lt;ID&gt;</code>.  And to remove all images, put them together:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker rmi <span class="sb">`</span>docker images <span class="nt">-q</span><span class="sb">`</span>
+</code></pre></div></div>
+
+<h2 id="create-simple-dockerfile">Create simple Dockerfile</h2>
+
+<p><img src="images/visual-studio-code.png" width="300" height="181" /></p>
+
+<p>Choose an editor to create a text file named <code class="language-plaintext highlighter-rouge">Dockerfile</code>.  I prefer Microsoft’s <a href="https://code.visualstudio.com">Visual Studio Code</a>.  You will also want <a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> if you plan to build and test on a machine other than the Raspberry Pi.  If you want to save Docker images rather than building them every time, you will want to <a href="https://hub.docker.com/signup">create an account with Docker Hub</a> and use it as your image repository.</p>
+
+<h2 id="build-docker-image">Build Docker Image</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build ./
+</code></pre></div></div>
+
+
+        </section>
+
+        <footer>
+        
+          DIY Edge Computing is maintained by <a href="https://github.com/joe-diy">joe-diy</a><br>
+        
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.
+        </footer>
+
+      </div>
+    </div>
+
+    
+  </body>
+</html>

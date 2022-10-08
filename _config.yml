@@ -1,0 +1,12 @@
+title: DIY Edge Computing 
+description: Learn how to do Edge Computing end-to-end.
+theme: jekyll-theme-tactile
+
+
+# Secondary Parameters
+headercolor: "#FFFFFF"
+
+# Tertiary Parameters
+github_username: joe-diy
+project_repository: DIY-EdgeComputing
+altmetric: true
