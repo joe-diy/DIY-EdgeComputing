@@ -75,7 +75,7 @@ hzn version
 hzn node list | jq '.configstate.state'   # -> "configured"
 ```
 
-`"configured"` means the agent registered and is in contact with the exchange. The installer already registered the node with default settings; register it again with an explicit **node policy** so the node advertises properties the hub can match against:
+`"configured"` means the agent registered and is in contact with the exchange. The installer usually registers the node for you with a default policy; unregister and re-register to attach an explicit **node policy** so the node advertises properties the hub can match against:
 
 ```bash
 cat > node.policy.json <<'EOF'
@@ -87,6 +87,9 @@ cat > node.policy.json <<'EOF'
   "constraints": []
 }
 EOF
+# The installer may have already registered the node with a default policy.
+# Unregister first so you can re-register with your own:
+hzn unregister -f -r
 hzn register --policy node.policy.json
 hzn node list | jq '{id: .id, org: .organization, state: .configstate.state}'
 ```
