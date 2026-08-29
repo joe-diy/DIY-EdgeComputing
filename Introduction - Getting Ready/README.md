@@ -82,7 +82,7 @@ sudo apt-get -y install jq git curl make gcc
 
 ## Installing Software
 
-In chapter one, you will be using Docker.  You may find it helpful to install both Docker Desktop on your computer, and Docker Community Edition (docker-ce) on the RPi.
+In chapter one, you will be using a container engine — Docker or Podman.  You may find it helpful to install both Docker Desktop on your computer, and Docker Community Edition (docker-ce) on the RPi.
 
 To install Docker Desktop on macOS, visit [https://download.docker.com/mac/stable/Docker.dmg](https://download.docker.com/mac/stable/Docker.dmg).
 
@@ -92,7 +92,14 @@ On the RPi, you can install docker-ce the following way:
 sudo curl -fsSL get.docker.com | sudo sh
 ```
 
-And then after it is installed, the following command will ensure that your "pi" user can run some docker commands without elevated permissions (after the next reboot):
+``` bash
+# Podman is in the Raspberry Pi OS / Debian repos:
+sudo apt-get -y install podman
+```
+
+Either engine is fine for the rest of the book; install whichever you prefer (or both).
+
+And then after Docker is installed, the following command will ensure that your "pi" user can run some docker commands without elevated permissions (after the next reboot):
 
 ``` bash
 sudo usermod -aG docker pi
