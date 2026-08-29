@@ -38,6 +38,8 @@ Everything else inherits [`00-template.md`](00-template.md) unchanged: vertical
 
 ## Shot list
 
+*Shots are listed in screen order; record order is 9 → 10 → 8.*
+
 | # | Shot | Notes |
 |---|------|-------|
 | 1 | Editor: service definition with a real-looking registry token pasted inline | Beat 1. On-screen problem line burned in. No machine label — an editor, not a shell. |

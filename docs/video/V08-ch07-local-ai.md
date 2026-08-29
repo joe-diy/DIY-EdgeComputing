@@ -5,7 +5,7 @@
 **Conventions:** [`00-template.md`](00-template.md)
 **Companion to:** [`2026-08-29-video-series-plan-design.md`](../superpowers/specs/2026-08-29-video-series-plan-design.md), Section 4 → *V8*
 
-**Dramatized moment:** Ask a local LLM a question with the Wi-Fi switched off — and it answers.
+**Dramatized moment:** Ask a local LLM a question with the internet unplugged — and it answers.
 
 > **Revised per the 2026-08-29 addendum to the video-series spec.** The original
 > beat 2 had Open Horizon push an inference service that *pulled its access token
@@ -32,7 +32,7 @@ cold-open sting, burned-in captions, fixed end card.
 | 1 | **Relatable problem** | 0:00–0:20 | Cold open on a chat app mid-answer, then the connection drops and the reply just stops. On-screen line within 2 s: *"every AI demo is 'and now we call the API'. your data leaves the building, you pay per token, and no Wi-Fi means no AI."* Sting on the dropped connection. |
 | 2 | **The fix** | 0:20–0:40 | Face enters. One Open Horizon service carries **two containers** — **Ollama** (the model runtime) and **Open WebUI** (the chat front-end). The same `policy-edge-ai` from V5 places it on the Pi; the model is **auto-pulled on first run**. No API key, no secret, nothing to call. The weights land on the Pi and stay there. |
 | 3 | **Punchline** | 0:40–0:50 | "OpenAI called. I sent it to voicemail." Clear the lower-thirds for the line; hold on a card — a phone icon going to voicemail, a Pi lighting up. |
-| 4 | **Demo** | 0:50–2:00 | On the `laptop`: `hzn agreement list \| jq '.[].workload_to_run.url'` → `edge-ai-chat` running on `pi-1`. Cut to the browser: `open http://<pi-ip>:3000`, the Open WebUI chat, model already pulled. Sanity-check on the `laptop`: `curl -s http://<pi-ip>:11434/api/generate -d '{"model":"llama3.2:3b","prompt":"one-sentence hello","stream":false}' \| jq -r .response` prints a line of text. Then, **on camera**, reach over and unplug the router (or `sudo nmcli radio wifi off` on `pi-1` in frame). Type a fresh question into the UI. Hold on the "thinking" state, then the answer fills in. Caption overlay: "still local. still answering." Still: `V08-shot-6.png`. ~70 s. |
+| 4 | **Demo** | 0:50–2:00 | On the `laptop`: `hzn agreement list \| jq '.[].workload_to_run.url'` → `edge-ai-chat` running on `pi-1`. Cut to the browser: `open http://<pi-ip>:3000`, the Open WebUI chat, model already pulled. Sanity-check on the `laptop`: `curl -s http://<pi-ip>:11434/api/generate -d '{"model":"llama3.2:3b","prompt":"one-sentence hello","stream":false}' \| jq -r .response` prints a line of text. Then, **on camera**, reach over and unplug the router's WAN cable (Pi and laptop stay on the same switch, so the browser still reaches `:3000`). Type a fresh question into the UI. Hold on the "thinking" state, then the answer fills in. Caption overlay: "still local. still answering." Still: `V08-shot-6.png`. ~70 s. |
 | 5 | **Hook** | 2:00–2:12 | "But what happens when it crashes at 3 a.m. and nobody's watching? Next: teaching it to notice." |
 | 6 | **Call to action** | 2:12–2:22 | "Follow the build." Subscribe / like framed as following the build, per template. |
 | 7 | **Book pointer** | 2:22–2:30 | End card (fixed): model choice, runtime, and resource limits → CH07. |
@@ -50,7 +50,7 @@ cold-open sting, burned-in captions, fixed end card.
 | 5 | `laptop`: `hzn agreement list \| jq '.[].workload_to_run.url'` → `edge-ai-chat` | Machine label `laptop`. Command as typed before output. Box the `edge-ai-chat` line green. |
 | 6 | Browser: `http://<pi-ip>:3000` Open WebUI chat, model selected | Beat 4. `<pi-ip>` redacted or a private-range address. |
 | 7 | `laptop`: `curl -s http://<pi-ip>:11434/api/generate -d '{…"model":"llama3.2:3b"…}' \| jq -r .response` | Machine label `laptop`. One line of generated text in the output. |
-| 8 | Router unplugged **on camera**, or `pi-1`: `sudo nmcli radio wifi off` in frame | Beat 4. The disconnect has to be visibly real — hand on the cable, or the command and the Wi-Fi indicator dropping. Machine label `pi-1` if it's the shell. |
+| 8 | Router WAN cable unplugged **on camera** | Beat 4. The disconnect has to be visibly real — hand on the cable. Leave the Pi and laptop on the same switch so the browser still reaches `:3000`. No machine label — it's the router, not a shell. |
 | 9 | Browser: new question typed into the UI, "thinking" state, then the answer fills in | Beat 4. Network is down for this whole shot. Caption overlay: "still local. still answering." Still: `V08-shot-6.png`. |
 
 ---
@@ -87,7 +87,7 @@ address, redacted or off-screen in every shot.
 
 - [ ] `laptop` terminal screen-capture — shots 5, 7; org / `HZN_*` values redacted or off-screen.
 - [ ] Browser capture of Open WebUI — shots 6, 9; `<pi-ip>` redacted, no real account email visible.
-- [ ] `pi-1` capture or on-camera plate for the network disconnect (shot 8) — the cut has to read as genuinely offline.
+- [ ] On-camera plate for the network disconnect (shot 8) — hand on the router's WAN cable; the cut has to read as genuinely offline.
 - [ ] Offline answer capture, full length (shot 9) — the source for the speed-ramp; `V08-shot-6.png` pulled from it.
 - [ ] Speed-ramp / timer plate for the inference wait — no pre-baked responses, no faster machine.
 - [ ] Cold-open on-screen problem line: "every AI demo is 'and now we call the API'. your data leaves the building, you pay per token, and no Wi-Fi means no AI."

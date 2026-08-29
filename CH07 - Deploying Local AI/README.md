@@ -47,7 +47,7 @@ Every cloud AI tutorial ends at "and now you call the API" — your prompts leav
 }
 ```
 
-Both `services` run on the same Docker network, so Open WebUI reaches the runtime at `http://ollama:11434` by service name — that is the `OLLAMA_BASE_URL` value. `OLLAMA_HOST=0.0.0.0` makes the runtime listen on all interfaces so the published `11434` port is reachable from the LAN, not just from inside the container. `userInput` exposes one knob, `OLLAMA_MODEL`, defaulting to `llama3.2:3b`; a node that needs the smaller model overrides it at registration time without touching this file.
+Both `services` run on the same container network, so Open WebUI reaches the runtime at `http://ollama:11434` by service name — that is the `OLLAMA_BASE_URL` value. `OLLAMA_HOST=0.0.0.0` makes the runtime listen on all interfaces so the published `11434` port is reachable from the LAN, not just from inside the container. `userInput` exposes one knob, `OLLAMA_MODEL`, defaulting to `llama3.2:3b`; a node that needs the smaller model overrides it at registration time without touching this file.
 
 If either image lives in a private registry, add the `secretBinding` block from chapter six referencing `<org>/registry-pull` — same shape, mounted at `/open-horizon-secrets/registry-auth`. The two images above are both public, so the binding is optional here, but the same pattern applies the moment you swap in a private model image.
 

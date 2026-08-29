@@ -50,7 +50,7 @@ If your network supports mDNS and this is the only RPi on the network, the hostn
 
 ### Second, Connect to the RPi and Change the Password
 
-Once you have the IP address, using a terminal, type `sss pi@<IP>` where "<IP>" should be replaced with the actual IP address of the RPi.  You will need to type "yes" to continue connecting the first time you access the RPi.  The default password is "raspberry".  Please change the password right away!  You can do that with the command `passwd`.
+Once you have the IP address, using a terminal, type `ssh pi@<IP>` where "<IP>" should be replaced with the actual IP address of the RPi.  You will need to type "yes" to continue connecting the first time you access the RPi.  The default password is "raspberry".  Please change the password right away!  You can do that with the command `passwd`.
 
 ## Getting Updated
 
@@ -104,6 +104,8 @@ And then after Docker is installed, the following command will ensure that your 
 ``` bash
 sudo usermod -aG docker pi
 ```
+
+This step is Docker-specific. Podman runs rootless, so there is no `podman` group to join — if you chose Podman, skip it.
 
 ## Next
 

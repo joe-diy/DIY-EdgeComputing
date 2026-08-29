@@ -22,7 +22,7 @@ card.
 | 1 | **Relatable problem** | 0:00–0:20 | Cold open on a terminal already SSH'd into `pi-1`. On-screen line within 2 s: *"one Pi, done. now do it 40 more times."* You've got a Pi with a container engine. Now multiply by 40, across 5 buildings. SSH into each one? Forever? |
 | 2 | **The fix** | 0:20–0:40 | Face enters. Install the Open Horizon agent (anax) once, then `hzn register` the node against a management hub — the LF Edge Community Lab's free hub. The node phones home; the hub drives it from there. No more per-node SSH. |
 | 3 | **Punchline** | 0:40–0:50 | "Forty Pis. One command. Zero road trips." Clear the lower-thirds for the line; hold on the "×40 across 5 buildings" motion-graphic card. |
-| 4 | **Demo** | 0:50–2:00 | Run `agent-install.sh` on the Pi with the four `HZN_*` vars exported — installer ends on *"Horizon node is registered."* Then `hzn register --policy node.policy.json` (policy advertises `purpose=edge-ai`, `model=rpi5-8gb`). `hzn node list` shows `state: "configured"`. Cut to a laptop browser on the hub dashboard — refresh — the node row flips to green **online**, from across the internet, nobody having touched the Pi's keyboard. ~70 s. |
+| 4 | **Demo** | 0:50–2:00 | Run `agent-install.sh` on the Pi with the four `HZN_*` vars exported — installer ends on *"Horizon node is registered."* Then `hzn unregister -f -r` (the installer already registered the node) and `hzn register --policy node.policy.json` (policy advertises `purpose=edge-ai`, `model=rpi5-8gb`). `hzn node list` shows `state: "configured"`. Cut to a laptop browser on the hub dashboard — refresh — the node row flips to green **online**, from across the internet, nobody having touched the Pi's keyboard. ~70 s. |
 | 5 | **Hook** | 2:00–2:12 | "The hub can see the node — but it's not running anything useful yet. Next: tell it what to deploy, without naming names." |
 | 6 | **Call to action** | 2:12–2:22 | "Follow the build." Subscribe / like framed as following the build, per template. |
 | 7 | **Book pointer** | 2:22–2:30 | End card (fixed): agent install, hub credentials, exchange URL → CH02. |
@@ -35,7 +35,7 @@ card.
 |---|------|-------|
 | 1 | Terminal on `pi-1`: `export HZN_ORG_ID=… / HZN_EXCHANGE_URL=… / HZN_FSS_CSSURL=… / HZN_EXCHANGE_USER_AUTH=…` | Values pre-filled off-camera; blur/redact the credential. Lower-third shows the four var names. |
 | 2 | Terminal: `sudo -E ./agent-install.sh -O "$HZN_ORG_ID" -u "$HZN_EXCHANGE_USER_AUTH" -i 'anax:'` | Command as typed before output. Let it run to the final line *"Horizon node is registered. Workload agreement negotiation should begin shortly."* — hold on that line. |
-| 3 | Terminal: `hzn register --policy node.policy.json` | Show the `node.policy.json` contents first (2 s) — `purpose=edge-ai`, `model=rpi5-8gb`. |
+| 3 | Terminal: `hzn unregister -f -r` then `hzn register --policy node.policy.json` | The installer already registered the node, so unregister first (matches V4 shot 4). Show the `node.policy.json` contents first (2 s) — `purpose=edge-ai`, `model=rpi5-8gb`. |
 | 4 | Terminal: `hzn node list \| jq '{id, org, state}'` | On-screen callout on `state: "configured"`. |
 | 5 | Laptop browser: hub dashboard, node list | Refresh on camera; the new node row appears and flips green **online**. Caption overlay: "from across the internet." Machine labels: `pi-1` top-left of terminal shots, none on the browser shot. |
 | 6 | (optional B-roll) wide of a single Pi on the bench next to the "×40 across 5 buildings" card | For beat 1 / beat 3 only. |

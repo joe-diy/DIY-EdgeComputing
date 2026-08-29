@@ -1,2 +1,5 @@
 # Superpowers subagent-driven-development scratch (ledger, briefs, review packages)
 .superpowers/
+
+# Jekyll build output — generated, disposable (see CLAUDE.md)
+_site/

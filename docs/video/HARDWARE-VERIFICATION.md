@@ -87,6 +87,11 @@ record the answer here and reconcile the chapter prose to it.
   byte-for-byte CH02 `agent-install.sh` line with the new `HZN_*` values in the
   environment → `hzn node list | jq '.configstate.state'` → `"configured"`
   against the self-hosted hub.
+- [ ] After the re-point, `hzn unregister -f -r` + `hzn register --policy
+  node.policy.json` re-attaches the CH02 node policy; `hzn policy list | jq
+  '.properties'` shows `purpose=edge-ai` / `model=rpi5-8gb` against the
+  self-hosted hub — without this step the installer's default policy is all the
+  node carries and nothing from CH04 on matches.
 - [ ] `HZN_ORG_ID` / `HZN_EXCHANGE_USER_AUTH` from the banner (generated admin
   org + credentials) work for subsequent `hzn exchange` calls.
 - [ ] Bench reset to shared-hub state afterwards — later chapters must not depend
@@ -125,6 +130,11 @@ record the answer here and reconcile the chapter prose to it.
   deployment-policy / service / node-policy evaluation (the "wider dry-run"
   claim added to the chapter).
 - [ ] Camera Pi passes the dry-run; the bare Pi fails on `camera == true`.
+- [ ] Confirm the CH04 `policy-edge-ai` agreement is torn down (or excluded)
+  before reading the camera-service agreement count —
+  `hzn exchange deployment removepolicy "$HZN_ORG_ID/policy-edge-ai"` — else both
+  Pis read `1` (it has no `camera` term, so it holds an agreement on every
+  `purpose == edge-ai` node).
 - [ ] After the agbot runs: `hzn agreement list | jq 'length'` → `1` on the
   camera Pi, `0` on the other (the V6 dramatized moment).
 
@@ -188,6 +198,11 @@ record the answer here and reconcile the chapter prose to it.
 - [ ] The `MONITOR_LLM_HOST` / `MONITOR_LLM_MODEL` env vars point the monitor at
   the CH07 Ollama (`:11434`) so one 3B model serves both chat and analysis;
   `MONITOR_LLM_AUTO_PULL=true` pulls the analysis model if CH07 has not cached it.
+- [ ] `export MONITOR_LLM_TIMEOUT=600` in the deploy block lets an analysis run
+  to completion (the 30 s default cancels every one on a Pi). **Open question:**
+  is `MONITOR_LLM_TIMEOUT` per-request or overall (whole analysis)? Time a real
+  analysis and tune the value; record the answer here and reconcile the CH08
+  prose.
 - [ ] **Open question:** do the `MONITORING_*` vars placed inside the
   `deployment.services.open-webui` section actually reach the node? Confirm the
   exchange does *not* strip them (the `*Why?*` claim) — and that a top-level
@@ -209,8 +224,9 @@ record the answer here and reconcile the chapter prose to it.
   analysis_duration_ms}`.
 - [ ] Recurrence updates the same file in place (`occurrences` climbs,
   `metadata.timestamp` moves) — no new file per hit.
-- [ ] The editing of CH07's service def to opt in keeps its existing
-  `"ports": [{ "HostPort": "3000" }]` entry intact.
+- [ ] Confirm (not repair): CH08's opt-in fragment already carries CH07's
+  `"ports": [ { "HostPort": "3000", "HostIP": "0.0.0.0" } ]` entry, so
+  republishing the edited service def does not drop the chat UI on `3000`.
 - [ ] Record analysis latency on a Pi (the verification fixture is ~136 s).
 
 ## CH09 — Autonomous Remediation
@@ -222,16 +238,20 @@ record the answer here and reconcile the chapter prose to it.
 - [ ] The gate: `severity` in `{high,critical}` **and** `confidence >= 0.9` via
   `bc -l`; below either → `HOLD` line; matched severity/confidence but unknown
   cause → `SKIP` line.
-- [ ] First-run cursor guard: with `/tmp/.remediator-cursor` absent, `touch -t
-  197001020000` is created and the first `find … -newer` pass sees every existing
-  proposal without erroring.
+- [ ] First-run cursor guard: with `/var/log/workloads/remediator/.cursor`
+  absent, `touch -t 197001020000` is created and the first `find … -newer` pass
+  sees every existing proposal without erroring. The cursor lives on the
+  persistent `:rw` mount, not `/tmp`, so it survives a post-remediation restart.
 - [ ] **Open question:** does `docker ps -a --filter name=edge-ai-chat -q` find
   the container (so `docker restart` works directly), or is it empty (container
-  named `open-webui` / agreement-id prefix) so the `|| hzn register --policy
-  /etc/horizon/node.policy.json` fallback fires? Record which path does the real
-  work on the bench.
-- [ ] The `edge-ai-remediator` image bundles `jq`, `bc`, and a container CLI
-  (`docker` or `podman`).
+  named `open-webui` / agreement-id prefix) so the
+  `|| { hzn unregister -f && hzn register --policy "$NODE_POLICY"; } || true`
+  fallback fires? Record which path does the real work on the bench, and confirm
+  the CH02 `node.policy.json` is readable at `$NODE_POLICY`
+  (default `/var/horizon/node.policy.json`) inside the container.
+- [ ] Build-time (not a bench check): the `edge-ai-remediator` image is built to
+  bundle `jq`, `bc`, and a container CLI (`docker` or `podman`), per the CH09
+  deploy section.
 - [ ] The service deploys with the three binds:
   `/var/lib/monitor/proposals:ro`, `/var/log/workloads:rw`,
   `/var/run/docker.sock:rw` (or the Podman socket

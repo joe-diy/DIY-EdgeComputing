@@ -863,6 +863,8 @@ You do not want a model with `sudo`. The executor only acts when **all** hold: `
 
 - [ ] **Step 3: Write `remediate.sh`**
 
+> Authoritative implementation: `CH09 - Autonomous Remediation/remediate.sh` in the repo (the block below is the original draft; the shipped script fixes tab-splitting, the cursor path/guard, and drops the 'config typo' pattern).
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail

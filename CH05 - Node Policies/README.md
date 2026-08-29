@@ -65,6 +65,17 @@ The two constraints are `AND`-joined, so a node now needs *both* `purpose == edg
 
 ## Only the right Pi picks it up
 
+First retire the chapter-four policy, so the only thing still deploying is the camera service:
+
+```bash
+# Retire the chapter-four policy so the only thing deploying is the camera service:
+hzn exchange deployment removepolicy "$HZN_ORG_ID/policy-edge-ai"
+```
+
+*Why?*
+
+You are now testing node-policy matching in isolation. `policy-edge-ai` has no `camera` term, so while it stays published it keeps an agreement on *every* `purpose == edge-ai` node — the bare Pi included — and the count below would read `1` on both. With only `policy-camera` left, the bare Pi fails its `camera == true` term and holds nothing. (Chapter seven republishes `policy-edge-ai` under the same name, so this is not a permanent teardown.)
+
 Give the agbot a few minutes, then check both Pis:
 
 ```bash

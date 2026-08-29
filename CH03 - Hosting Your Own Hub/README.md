@@ -55,10 +55,14 @@ Your Pi from chapter two is registered against the shared hub. Move it to your o
 ```bash
 hzn unregister -f -r
 sudo -E ./agent-install.sh -O "$HZN_ORG_ID" -u "$HZN_EXCHANGE_USER_AUTH" -i 'anax:'
+hzn unregister -f -r
+hzn register --policy node.policy.json   # re-attach the chapter-two node policy
 hzn node list | jq '.configstate.state'
 ```
 
-`hzn unregister -f -r` detaches the node from the old hub: `-f` forces it through even if agreements are active, and `-r` removes the node's record from that exchange. The `agent-install.sh` line is byte-for-byte the chapter-two command — the only things that changed are `HZN_EXCHANGE_URL`, `HZN_FSS_CSSURL`, and `HZN_AGBOT_URL` in the shell it inherits through `sudo -E`. When `hzn node list` reports `"configured"`, the Pi is talking to your hub.
+`hzn unregister -f -r` detaches the node from the old hub: `-f` forces it through even if agreements are active, and `-r` removes the node's record from that exchange. The `agent-install.sh` line is byte-for-byte the chapter-two command — the only things that changed are `HZN_EXCHANGE_URL`, `HZN_FSS_CSSURL`, and `HZN_AGBOT_URL` in the shell it inherits through `sudo -E`. The second `hzn unregister -f -r` / `hzn register --policy node.policy.json` pair is the same move chapter two made: the installer registers the node with its default policy, so you unregister and re-register against your `node.policy.json`. When `hzn node list` reports `"configured"`, the Pi is talking to your hub.
+
+*Why?* re-registering against a new hub starts from the installer's default policy — re-attach the chapter-two node policy or nothing from chapter four on will match, with no error to tell you.
 
 <!-- screenshot: the Pi registered in your own hub UI -->
 

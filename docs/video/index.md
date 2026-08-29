@@ -25,7 +25,7 @@ moves through the pipeline (record → edit → publish).
 | [V5](V05-ch04-deployment-policies.md) | CH04 Deployment Policies | Plug in a new Pi, walk away, the service auto-deploys — you never named the node. | ☑ | ☐ | ☐ | ☐ |
 | [V6](V06-ch05-node-policies.md) | CH05 Node Policies | Two Pis; the camera service lands only on the one with a camera, automatically. | ☑ | ☐ | ☐ | ☐ |
 | [V7](V07-ch06-secrets.md) | CH06 Secrets Management | Rotate a private registry credential in the hub; the fleet re-pulls, nothing hardcoded, no manual redeploy. | ☑ | ☐ | ☐ | ☐ |
-| [V8](V08-ch07-local-ai.md) | CH07 Deploying Local AI | Ask a local LLM a question with the Wi-Fi switched off. | ☑ | ☐ | ☐ | ☐ |
+| [V8](V08-ch07-local-ai.md) | CH07 Deploying Local AI | Ask a local LLM a question with the internet unplugged. | ☑ | ☐ | ☐ | ☐ |
 | [V9](V09-ch08-detecting.md) | CH08 Detecting Problems | Kill the AI container on purpose; the dashboard goes red and says exactly what broke. | ☑ | ☐ | ☐ | ☐ |
 | [V10](V10-ch09-remediation.md) | CH09 Autonomous Remediation | Break it again — the local AI diagnoses and restarts it while you watch, hands off keyboard. | ☑ | ☐ | ☐ | ☐ |
 
