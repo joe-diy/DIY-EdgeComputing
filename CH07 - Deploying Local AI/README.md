@@ -47,7 +47,7 @@ Every cloud AI tutorial ends at "and now you call the API" — your prompts leav
 }
 ```
 
-Both `services` share one network namespace, so Open WebUI reaches the runtime at `http://ollama:11434` by service name — that is the `OLLAMA_BASE_URL` value. `OLLAMA_HOST=0.0.0.0` makes the runtime listen on all interfaces so the published `11434` port is reachable from the LAN, not just from inside the container. `userInput` exposes one knob, `OLLAMA_MODEL`, defaulting to `llama3.2:3b`; a node that needs the smaller model overrides it at registration time without touching this file.
+Both `services` run on the same Docker network, so Open WebUI reaches the runtime at `http://ollama:11434` by service name — that is the `OLLAMA_BASE_URL` value. `OLLAMA_HOST=0.0.0.0` makes the runtime listen on all interfaces so the published `11434` port is reachable from the LAN, not just from inside the container. `userInput` exposes one knob, `OLLAMA_MODEL`, defaulting to `llama3.2:3b`; a node that needs the smaller model overrides it at registration time without touching this file.
 
 If either image lives in a private registry, add the `secretBinding` block from chapter six referencing `<org>/registry-pull` — same shape, mounted at `/open-horizon-secrets/registry-auth`. The two images above are both public, so the binding is optional here, but the same pattern applies the moment you swap in a private model image.
 
@@ -98,13 +98,13 @@ curl -s http://<pi-ip>:11434/api/generate -d '{"model":"llama3.2:3b","prompt":"o
 
 The first call creates a local Open WebUI account (it stays on the Pi) and lets you pick the model that was pulled. The `curl` hits Ollama's HTTP API directly and prints just the generated text — proof the runtime is answering without the UI in the loop.
 
-Now pull the Pi's network: unplug the Ethernet cable, or run `sudo nmcli radio wifi off` on the Pi. Ask it another question through the chat UI. It answers.
+Now disconnect the internet — pull your router's WAN cable, or otherwise cut the LAN's uplink; leave the Pi and your laptop on the same switch, so the browser still reaches `http://<pi-ip>:3000` but the Pi can no longer phone home. Ask it another question through the chat UI. It answers.
 
 <!-- screenshot: chat answering with the Wi-Fi indicator off -->
 
 *Why?*
 
-The model, the weights and the inference all live on the Pi; the network was only ever carrying your keystrokes. Cut it and the only thing you lose is the browser on the other machine reaching the UI — the model itself never needed it.
+The model, the weights and the inference all live on the Pi; the network was only ever carrying your keystrokes.
 
 ## Next
 
