@@ -107,4 +107,4 @@ sudo usermod -aG docker pi
 
 ## Next
 
-On to [chapter one](https://github.com/joe-diy/DIY-EdgeComputing/tree/master/CH01%20-%20Docker#chapter-one---images-and-containers).
+On to [chapter one](https://github.com/joe-diy/DIY-EdgeComputing/tree/master/CH01%20-%20Docker#chapter-one---containers-with-docker-and-podman).

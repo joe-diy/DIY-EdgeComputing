@@ -57,7 +57,7 @@ hzn exchange deployment addpolicy -f deployment.policy.json "$HZN_ORG_ID/policy-
 hzn deploycheck all -b "$HZN_ORG_ID/policy-camera"
 ```
 
-`addpolicy` creates `policy-camera` beside `policy-edge-ai` — the original still deploys wherever `purpose == edge-ai`. `hzn deploycheck all` is the wider dry-run: it evaluates the deployment policy, the service, *and* every node policy, and reports which nodes come out compatible. Expect the camera Pi to pass and the other to fail on `camera == true`, before any agreement exists.
+`addpolicy` creates `policy-camera` beside `policy-edge-ai` — the original still deploys wherever `purpose == edge-ai`. `hzn deploycheck all` is the wider dry-run: it evaluates the deployment policy, the service, *and* every node policy, and also folds in the user-input and secret-binding checks, then reports which nodes come out compatible. Expect the camera Pi to pass and the other to fail on `camera == true`, before any agreement exists.
 
 *Why?*
 

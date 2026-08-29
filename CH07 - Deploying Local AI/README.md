@@ -100,7 +100,7 @@ The first call creates a local Open WebUI account (it stays on the Pi) and lets 
 
 Now disconnect the internet — pull your router's WAN cable, or otherwise cut the LAN's uplink; leave the Pi and your laptop on the same switch, so the browser still reaches `http://<pi-ip>:3000` but the Pi can no longer phone home. Ask it another question through the chat UI. It answers.
 
-<!-- screenshot: chat answering with the Wi-Fi indicator off -->
+<!-- screenshot: chat answering with the internet uplink disconnected -->
 
 *Why?*
 

@@ -83,7 +83,7 @@ watch -n 5 'ls -t /var/lib/monitor/proposals/edge-ai-chat/'
 cat /var/lib/monitor/proposals/edge-ai-chat/*.json | jq '{error_summary, root_cause, severity, confidence, requires_human_review}'
 ```
 
-Expect a proposal file within a poll cycle or two: the monitor polls every 60 s, and the analysis itself is minutes on a Pi, not seconds. When it lands, the `jq` filter above pulls out the fields chapter nine's executor will gate on.
+Expect a proposal file within a poll cycle or two: the monitor polls every 60 s, and the analysis itself is minutes on a Pi, not seconds. When it lands, the `jq` filter above pulls out some of the fields chapter nine's executor will gate on.
 
 The full file looks like this — one per distinct problem, at `/var/lib/monitor/proposals/edge-ai-chat/<problem-key>.json`, rewritten in place each time the same error recurs:
 
