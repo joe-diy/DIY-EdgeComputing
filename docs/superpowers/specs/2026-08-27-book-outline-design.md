@@ -53,3 +53,23 @@ Videos release in the same order as the chapters, so each assumes only what prio
 - **service-edge-ai specifics unconfirmed**: no internet access during this design session to inspect the actual repo. CH07's exact content (which model/runtime, exact secret needed) must be verified against the repo before that chapter is drafted.
 - **Video platform/runtime specifics**: left for the separate video-outline spec.
 - **Chapter numbering**: provisional, may shift.
+
+---
+
+## Addendum 2026-08-29: `service-edge-ai` verified — CH06/CH07 revised
+
+The "service-edge-ai specifics unconfirmed" open question is resolved. Findings:
+`docs/video/00-verification-service-edge-ai.md`. Net changes to the chapter list:
+
+- **CH06 Secrets Management** now binds a **private container-registry pull
+  credential** (the AI stack needs no secret of its own). Same Open Horizon
+  secrets-manager mechanism; different, always-applicable example.
+- **CH07 Deploying Local AI** deploys **Ollama + Open WebUI** as the edge chat
+  service (real offline inference the reader can talk to). `service-edge-ai` is
+  *not* CH07 — it is the CH08–CH09 capstone.
+- **CH08 Detecting Problems** deploys `service-edge-ai` as a log-watching
+  monitor that emits advisory JSON proposals, reusing CH07's Ollama runtime.
+- **CH09 Autonomous Remediation** adds the executor (proposal → gated action)
+  on top, because `service-edge-ai` is advisory-only by design.
+- **Hardware:** the AI chapters require a Pi 4/5 with **8 GB RAM**; analysis is
+  minutes, not seconds. Called out in CH07–CH09.

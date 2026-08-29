@@ -307,3 +307,36 @@ hook → CTA → book pointer).
 - **Platform specifics deferred:** channel branding, thumbnail style, exact
   publish day/time, and whether any video also gets a long-form cut are left to
   execution, not this plan.
+
+---
+
+## Addendum 2026-08-29 — `service-edge-ai` verified
+
+The "`service-edge-ai` unverified" risk and the week-2 verification gate are
+closed. Findings: `docs/video/00-verification-service-edge-ai.md`. The repo is a
+log-watching **workload monitor** that writes **advisory** JSON proposals and
+never acts, and it needs **no secret** (local Ollama + local anax only). That
+changes four beat sheets:
+
+- **V7 (CH06):** the rotation demo rotates a **private container-registry pull
+  credential**, not an AI API key — the AI stack needs no secret of its own.
+  Same secrets-manager mechanism, same "rotate and the fleet picks it up"
+  punchline; only the example secret changes.
+- **V8 (CH07):** deploys **Ollama + Open WebUI** as the edge chat service.
+  Beat 2's "pulls its access token from the secret set up in V7" is dropped —
+  there is no token. The "ask it a question with the Wi-Fi off" demo (beat 4) is
+  **unchanged**.
+- **V9 (CH08):** the moment is a **`service-edge-ai` proposal file** appearing —
+  the monitor tails a broken workload's log and writes
+  `/var/lib/monitor/proposals/<workload>/<key>.json` with `severity`,
+  `confidence`, and `remediation_steps`. Still "it broke and admitted it," now
+  with the machine-readable receipt.
+- **V10 (CH09):** the "autonomous" layer is a **reader-built executor** that
+  reads that proposal, gates on severity/confidence, and acts. `service-edge-ai`
+  is advisory-only (`requires_human_review: true` on every proposal), so the
+  loop-closing code is net-new content, not a repo feature.
+
+**Hardware / latency:** V8–V10 need a **Pi 4/5 with 8 GB RAM** (the chat LLM,
+the monitor, and the demo workload share the node). Analysis takes **minutes,
+not seconds** (~136 s per error in the shipped fixture). Plan B-roll and edit
+around the wait — do not fake real-time in the V9/V10 demos.
